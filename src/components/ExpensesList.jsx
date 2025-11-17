@@ -1,0 +1,53 @@
+import { useEffect, useState } from "react"
+
+const ExpensesList = () => {
+
+    const [expensesList, setExpensesList] = useState([])
+    const loadData = () => {
+        const storedExpenses = JSON.parse(localStorage.getItem("expenses")) || [];
+        setExpensesList(storedExpenses);
+    }
+    const getCategoryName = (id) => {
+        const categoriesList = JSON.parse(localStorage.getItem("categories")) || [];
+        const found = categoriesList.find(cat => cat.cat_id === +id);
+        console.log(found);
+         return found?.cat_name || ""
+    }
+    useEffect(() => {
+        loadData()
+    }, [])
+    return (
+        <div className="container py-5">
+            <div className="card">
+                <div className="card-header"><h2>Expenses List</h2></div>
+                <div className="card-body">
+                    <table class="table table-bordered table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {expensesList.map((data, index) => (
+                                <tr key={data.expense_id}>
+                                    <td>{index+1}</td>
+                                    <td>{data.expense_title}</td>
+                                    <td>{getCategoryName(data.expense_category)}</td>
+                                    <td>Rs. {data.expense_amount}</td>
+                                    <td>{data.expense_date}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default ExpensesList
