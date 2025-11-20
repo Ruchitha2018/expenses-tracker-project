@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip, Legend } from "chart.js";
+import { useDispatch, useSelector } from "react-redux";
+import { loadCategories } from "../redux/categorySlice";
+import { loadexpenses } from "../redux/expenseSlice";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 const ExpensesChart = () => {
+    const dispatch = useDispatch();
 
-    const [expensesList, setExpensesList] = useState([]);
-    const [categoriesList, setCategoriesList] = useState([]);
-
-    useEffect(() => {
-        const storedExpenses = JSON.parse(localStorage.getItem("expenses")) || [];
-        const storedCategories = JSON.parse(localStorage.getItem("categories"))
-        setExpensesList(storedExpenses);
-        setCategoriesList(storedCategories);
-    }, []);
+    const categoriesList = useSelector((state) => state.categories.categories);
+    const expensesList = useSelector((state) => state.expenses.expenses);
 
     const getCategoryName = (id) => {
         const found = categoriesList.find(cat => cat.cat_id === id);

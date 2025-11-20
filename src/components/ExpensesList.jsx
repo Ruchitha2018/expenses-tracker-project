@@ -1,21 +1,19 @@
 import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { loadCategories } from "../redux/categorySlice";
+import { loadexpenses } from "../redux/expenseSlice";
 
 const ExpensesList = () => {
+    const dispatch = useDispatch();
 
-    const [expensesList, setExpensesList] = useState([])
-    const loadData = () => {
-        const storedExpenses = JSON.parse(localStorage.getItem("expenses")) || [];
-        setExpensesList(storedExpenses);
-    }
+    const expensesList = useSelector((store) => store.expenses.expenses);
+    const categoriesList = useSelector((store) => store.categories.categories);
+    
     const getCategoryName = (id) => {
-        const categoriesList = JSON.parse(localStorage.getItem("categories")) || [];
         const found = categoriesList.find(cat => cat.cat_id === +id);
         console.log(found);
          return found?.cat_name || ""
     }
-    useEffect(() => {
-        loadData()
-    }, [])
     return (
         <div className="container py-5">
             <div className="card">

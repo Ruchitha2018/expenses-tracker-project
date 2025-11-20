@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { addExpense } from "../redux/expenseSlice";
+import { loadCategories } from "../redux/categorySlice";
 
 const Expenses = () => {
+
+    const dispatch = useDispatch();
+    const categoriesList = useSelector((state) => state.categories.categories)
 
     const [expense, setExpense] = useState({
         expense_id: "",
@@ -10,9 +16,6 @@ const Expenses = () => {
         expense_date: ""
     })
 
-    const [expensesList, setExpensesList] = useState([])
-    const [categoriesList, setCategoriesList] = useState([])
-
     const handleInputChange = (e) => {
         setExpense({ ...expense, [e.target.name]: e.target.value })
     }
@@ -20,10 +23,7 @@ const Expenses = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault()
         const newExpense = { ...expense, expense_id: Date.now() }
-        const updatedList = [...expensesList, newExpense];
-        setExpensesList(updatedList);
-
-        localStorage.setItem("expenses", JSON.stringify(updatedList));
+       dispatch(addExpense(newExpense));
         setExpense({
             expense_title: "",
             expense_amount: "",
@@ -31,17 +31,6 @@ const Expenses = () => {
             expense_date: ""
         })
     }
-
-    const loadData = () => {
-        const storedCategories = JSON.parse(localStorage.getItem("categories")) || [];
-        setCategoriesList(storedCategories);
-        const storedExpenses = JSON.parse(localStorage.getItem("expenses")) || [];
-        setExpensesList(storedExpenses);
-    }
-
-    useEffect(() => {
-        loadData()
-    }, [])
     return (
         <div className="container py-5">
             <div className="card">
@@ -76,7 +65,7 @@ const Expenses = () => {
                             >
                                 <option value="">Select Category</option>
 
-                                {categoriesList.map((data) => (
+                                {categoriesList?.map((data) => (
                                     <option value={data.cat_id} key={data.cat_id}>
                                         {data.cat_name}
                                     </option>

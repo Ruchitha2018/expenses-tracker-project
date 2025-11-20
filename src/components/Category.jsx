@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import { addCategory } from "../redux/categorySlice";
 
 const Category = () => {
+    const dispatch = useDispatch();
     const [category, setCategory] = useState({
         cat_id: "",
         cat_name: "",
         cat_color: ""
     })
 
-    const [categoryList, setCategoryList] = useState([]);
 
     const handleInputChange = (e) => {
         setCategory((prev) => ({...prev, [e.target.name]: e.target.value}))
@@ -16,18 +18,10 @@ const Category = () => {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         const newCategory = { ...category, cat_id: Date.now() }
-        console.log(newCategory)
-        setCategory({ cat_id: "", cat_name: "", cat_color:""})
-        const updatedList = [...categoryList, newCategory];
-        localStorage.setItem("categories", JSON.stringify(updatedList))
-        setCategoryList(updatedList)
-    }
-    const loadCategories = () => {
-        const storedCategories = JSON.parse(localStorage.getItem("categories")) || [];
-        setCategoryList(storedCategories);
+        dispatch(addCategory(newCategory));
+        
     }
     useEffect(() => {
-       loadCategories();
     },[])
     return (
         <div className="container py-5">
