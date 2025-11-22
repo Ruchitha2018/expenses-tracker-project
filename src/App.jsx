@@ -1,8 +1,5 @@
 import { Link, Route, Router, Routes } from "react-router-dom"
 import Category from "./components/Category"
-import Expenses from "./components/Expenses"
-import ExpensesChart from "./components/ExpensesChart"
-import ExpensesList from "./components/ExpensesList"
 
 
 function App() {
@@ -19,9 +16,6 @@ function App() {
       </nav>
       <Routes>
         <Route path="/add-category" element={<Category />} />
-        <Route path="/add-expense" element={<Expenses />} />
-        <Route path="/expenses-list" element={<ExpensesList />} />
-        <Route path="/expenses-chart" element={<ExpensesChart />} />
       </Routes>
     </>
   )
