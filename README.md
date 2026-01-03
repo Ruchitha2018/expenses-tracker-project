@@ -1,16 +1,22 @@
-# React + Vite
+// POC
+SME: Mayur Sanjayrao Patil
+ReactJS POC: Expense Tracker - CRUD Operations
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ 
+The Expense Tracker helps users record their daily expenses by entering details such as name, amount, category, and date.
 
-Currently, two official plugins are available:
+It displays all the added expenses in a list, shows a total expense summary, and provides a category-wise breakdown to give users insights into their spending habits.The Expense Tracker helps users record their daily expenses by entering details such as name, amount, category, and date.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+It displays all the added expenses in a list, shows a total expense summary, and provides a category-wise breakdown to give users insights into their spending habits.
 
-## React Compiler
+Categories
+Expenses
+Expenses Chart based on categories
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+//Technology Stack
+Frontend:- React
+CSS:- Bootstrap
+Backend:- Node.js
+DB:- MongoDB
+ 

@@ -1,15 +1,22 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addExpense, getExpenseById } from "../redux/expenseSlice";
+import { addExpense, editExpense, getExpenseById, listExpense } from "../redux/expenseSlice";
 import { fetchCategories } from "../redux/categorySlice";
 import { toast } from "react-toastify";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useParams } from "react-router-dom";
 
 
-const Expenses = () => {
+const ExpenseEditForm = () => {
     const dispatch = useDispatch();
     const { categories, loading } = useSelector((state) => state.categories);
+    const { selectedExpense } = useSelector((state) => state.expenses);
+    const data = useSelector((state) => state);
+
+    const { id } = useParams();
+
+    console.log(id);
 
 
     const [expense, setExpense] = useState({
@@ -19,32 +26,32 @@ const Expenses = () => {
         expense_date: ""
     });
 
+
+    console.log(selectedExpense)
+
     const handleInputChange = (e) => {
         setExpense({ ...expense, [e.target.name]: e.target.value });
     };
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
+    const handleFormSubmit = async () => {
+   
+    }
 
-        if (!expense.expense_name || !expense.expense_amount || !expense.expense_category) {
-            toast.error("Please fill all required fields");
-            return;
+    useEffect(() => {
+        if (selectedExpense) {
+            setExpense({
+                expense_name: selectedExpense.expense_name,
+                expense_amount: selectedExpense.expense_amount,
+                expense_category: "",
+                expense_date: selectedExpense.expense_date
+            });
         }
-
-        dispatch(addExpense(expense));
-        toast.success("Expense added successfully!");
-
-        setExpense({
-            expense_name: "",
-            expense_amount: "",
-            expense_category: "",
-            expense_date: ""
-        });
-    };
+    }, [selectedExpense])
 
     useEffect(() => {
         dispatch(fetchCategories());
-    }, []);
+        dispatch(getExpenseById(id))
+    }, [dispatch, id]);
 
     return (
         <div className="container py-5 d-flex justify-content-center">
@@ -52,7 +59,7 @@ const Expenses = () => {
                 <div className="card-header bg-white border-bottom py-3">
                     <h3 className="fw-bold">
                         <i className="bi bi-folder-plus me-2"></i>
-                        Add Expense
+                        Edit Expense
                     </h3>
                 </div>
 
@@ -127,8 +134,8 @@ const Expenses = () => {
 
                         {/* Submit */}
                         <div className="col-12">
-                            <button className="btn btn-primary w-100 py-2 fs-6 fw-semibold">
-                                Add Expense
+                            <button className="btn btn-primary w-100 py-2 fs-6 fw-semibold" onClick={handleFormSubmit}>
+                                Edit Expense
                             </button>
                         </div>
                     </form>
@@ -139,4 +146,4 @@ const Expenses = () => {
     );
 };
 
-export default Expenses;
+export default ExpenseEditForm;
